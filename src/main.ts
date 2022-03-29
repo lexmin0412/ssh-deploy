@@ -31,24 +31,24 @@ export async function run() {
     const dst = core.getInput('TARGET');
     core.info(`target, ${dst}`);
     const afterCommand = core.getInput('AFTER_COMMAND');
-    const conn = new Client();
-    conn.on('ready', async () => {
-      const sftp = new Sftp(conn);
-      core.info('begin upload');
-      // await sftp.uploadDir(src, dst);
-      core.info('end upload');
-      let code: any = 0;
-      // if (afterCommand) {
-      //   core.info('begin execute command');
-      //   code = await exec(conn, `cd ${dst} && ${afterCommand}`);
-      //   core.info('end execute command');
-      // }
-      conn.end();
-      if (code === 1) {
-        core.setFailed(`command execute failed`);
-      }
-    });
-    conn.connect({ host, port, username, password });
+    // const conn = new Client();
+    // conn.on('ready', async () => {
+    //   // const sftp = new Sftp(conn);
+    //   core.info('begin upload');
+    //   // await sftp.uploadDir(src, dst);
+    //   core.info('end upload');
+    //   let code: any = 0;
+    //   // if (afterCommand) {
+    //   //   core.info('begin execute command');
+    //   //   code = await exec(conn, `cd ${dst} && ${afterCommand}`);
+    //   //   core.info('end execute command');
+    //   // }
+    //   conn.end();
+    //   if (code === 1) {
+    //     core.setFailed(`command execute failed`);
+    //   }
+    // });
+    // conn.connect({ host, port, username, password });
   } catch (error) {
     core.setFailed(error.message);
   }
