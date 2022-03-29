@@ -28,9 +28,11 @@ export async function run() {
     const password = core.getInput('PASSWORD');
     const src = core.getInput('SOURCE');
     console.log('source', src)
+    console.log('source', src.split(','))
     console.log('source', typeof src)
     const dst = core.getInput('TARGET');
     console.log('target', dst)
+    console.log('target', dst.split(','))
     const afterCommand = core.getInput('AFTER_COMMAND');
     const conn = new Client();
     conn.on('ready', async () => {
