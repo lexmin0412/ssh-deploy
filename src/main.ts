@@ -49,7 +49,7 @@ export async function run() {
     //   }
     // });
     // conn.connect({ host, port, username, password });
-  } catch (error) {
+  } catch (error: any) {
     core.setFailed(error.message);
   }
 }
