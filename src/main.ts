@@ -27,29 +27,38 @@ export async function run() {
     const username = core.getInput('USERNAME');
     const password = core.getInput('PASSWORD');
     const src = core.getInput('SOURCE');
-    core.info(`target, ${src}`);
     const dst = core.getInput('TARGET');
-    core.info(`target, ${dst}`);
     const afterCommand = core.getInput('AFTER_COMMAND');
-    // const conn = new Client();
-    // conn.on('ready', async () => {
-    //   // const sftp = new Sftp(conn);
-    //   core.info('begin upload');
-    //   // await sftp.uploadDir(src, dst);
-    //   core.info('end upload');
-    //   let code: any = 0;
-    //   // if (afterCommand) {
-    //   //   core.info('begin execute command');
-    //   //   code = await exec(conn, `cd ${dst} && ${afterCommand}`);
-    //   //   core.info('end execute command');
-    //   // }
-    //   conn.end();
-    //   if (code === 1) {
-    //     core.setFailed(`command execute failed`);
-    //   }
-    // });
-    // conn.connect({ host, port, username, password });
-  } catch (error: any) {
+    const conn = new Client();
+    conn.on('ready', async () => {
+      const sftp = new Sftp(conn);
+      core.info('begin upload');
+      // 多个
+      const srcPaths = src.split(',');
+      const dstPaths = dst.split(',');
+      if ( srcPaths.length !== dstPaths.length ) {
+        core.info(`upload ${src} to ${dst}`);
+        await sftp.uploadDir(src, dst);
+      } else {
+        srcPaths.forEach(async(item: string, index)=> {
+          core.info(`upload ${item} to ${dstPaths[index]}`);
+          await sftp.uploadDir(item, dstPaths[index]);
+        })
+      }
+      core.info('end upload');
+      let code: any = 0;
+      if (afterCommand) {
+        core.info('begin execute command');
+        code = await exec(conn, `cd ${dst} && ${afterCommand}`);
+        core.info('end execute command');
+      }
+      conn.end();
+      if (code === 1) {
+        core.setFailed(`command execute failed`);
+      }
+    });
+    conn.connect({ host, port, username, password });
+  } catch (error) {
     core.setFailed(error.message);
   }
 }
