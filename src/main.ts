@@ -27,25 +27,22 @@ export async function run() {
     const username = core.getInput('USERNAME');
     const password = core.getInput('PASSWORD');
     const src = core.getInput('SOURCE');
-    console.log('source', src)
-    console.log('source', src.split(','))
-    console.log('source', typeof src)
+    core.info(`target, ${src}`);
     const dst = core.getInput('TARGET');
-    console.log('target', dst)
-    console.log('target', dst.split(','))
+    core.info(`target, ${dst}`);
     const afterCommand = core.getInput('AFTER_COMMAND');
     const conn = new Client();
     conn.on('ready', async () => {
       const sftp = new Sftp(conn);
       core.info('begin upload');
-      await sftp.uploadDir(src, dst);
+      // await sftp.uploadDir(src, dst);
       core.info('end upload');
       let code: any = 0;
-      if (afterCommand) {
-        core.info('begin execute command');
-        code = await exec(conn, `cd ${dst} && ${afterCommand}`);
-        core.info('end execute command');
-      }
+      // if (afterCommand) {
+      //   core.info('begin execute command');
+      //   code = await exec(conn, `cd ${dst} && ${afterCommand}`);
+      //   core.info('end execute command');
+      // }
       conn.end();
       if (code === 1) {
         core.setFailed(`command execute failed`);
