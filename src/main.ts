@@ -51,6 +51,7 @@ export async function run() {
       if (afterCommand) {
         core.info('begin execute command');
         code = await exec(conn, `cd ${dst} && ${afterCommand}`);
+        core.info(`code: ${code}`);
         core.info('end execute command');
       }
       conn.end();
