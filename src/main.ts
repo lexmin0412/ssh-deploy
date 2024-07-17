@@ -29,6 +29,7 @@ export async function run() {
     const src = core.getInput('SOURCE');
     const dst = core.getInput('TARGET');
     const afterCommand = core.getInput('AFTER_COMMAND');
+    console.log('enter run', host, port)
     const conn = new Client();
     conn.on('ready', async () => {
       const sftp = new Sftp(conn);
