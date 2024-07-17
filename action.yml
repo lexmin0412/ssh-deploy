@@ -26,5 +26,5 @@ inputs:
   AFTER_COMMAND:
     description: 'upload success execute command'
 runs:
-  using: 'node12'
+  using: 'node18'
   main: 'dist/index.js'
