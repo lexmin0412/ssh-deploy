@@ -28,6 +28,7 @@
   "devDependencies": {
     "@types/node": "^15.6.1",
     "@types/ssh2": "^0.5.46",
+    "@vercel/ncc": "^0.38.1",
     "@zeit/ncc": "^0.22.3",
     "prettier": "^2.3.0",
     "typescript": "^4.3.2"
